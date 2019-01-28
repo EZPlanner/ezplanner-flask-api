@@ -11,3 +11,5 @@ def create_app(config_filename):
     db.init_app(app)
 
     return app
+
+app = create_app('config');
