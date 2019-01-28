@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from Model import db, Course, CourseSchema
+from app.Model import db, Course, CourseSchema
 
 courses_schema = CourseSchema(many=True)
 course_schema = CourseSchema()
