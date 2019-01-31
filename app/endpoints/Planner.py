@@ -14,11 +14,13 @@ class PlannerResource(Resource):
         coursesInput = parser.parse_args()
         # coursesInput['course'] returns a list of all courses input
         futureCourses = PlannerLogic(coursesInput['course'])
-        return {
+        response= {
             'Access-Control-Allow-Origin':'*',
             'status': 'success',
             'data': futureCourses
-        }, 200
+        }
+        response.headers.add('Access-Control-Allow-Origin', '*') 
+        return (response,200)
 
     def post(self):
         return {
