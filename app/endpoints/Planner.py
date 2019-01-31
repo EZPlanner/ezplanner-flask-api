@@ -19,7 +19,7 @@ class PlannerResource(Resource):
             'status': 'success',
             'data': futureCourses
         }
-        response.jsonify.headers.add('Access-Control-Allow-Origin', '*') 
+        jsonify(response).headers.add('Access-Control-Allow-Origin', '*') 
         return (response,200)
 
     def post(self):
