@@ -1,8 +1,8 @@
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource,reqparse
 from app.scripts.PlannerLogic import PlannerLogic
 from app.Model import db, Course, CourseSchema
-import json, jsonify
+import json
 
 courses_schema = CourseSchema(many=True)
 course_schema = CourseSchema()
