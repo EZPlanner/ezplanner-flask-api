@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource,reqparse
 from app.scripts.PlannerLogic import PlannerLogic
 from app.Model import db, Course, CourseSchema
-import json
+import json, jsonify
 
 courses_schema = CourseSchema(many=True)
 course_schema = CourseSchema()
@@ -19,7 +19,7 @@ class PlannerResource(Resource):
             'status': 'success',
             'data': futureCourses
         }
-        response.headers.add('Access-Control-Allow-Origin', '*') 
+        response.jsonify.headers.add('Access-Control-Allow-Origin', '*') 
         return (response,200)
 
     def post(self):
