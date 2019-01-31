@@ -10,8 +10,8 @@ class PostReqResource(Resource):
     def get(self):
         courses = {}
         try:
-             # TODO Replace code below, this was just copied from Courses.py
-             raise ValueError('Using to skip try block.')
+            # TODO Replace code below, this was just copied from Courses.py
+            raise ValueError('Using to skip try block.')
             courses = Course.query.all()
             courses = course_schema.dump(courses).data
         except:
