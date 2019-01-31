@@ -15,7 +15,7 @@ class PlannerResource(Resource):
         # coursesInput['course'] returns a list of all courses input
         futureCourses = PlannerLogic(coursesInput['course'])
         return {
-            'Access-Control-Allow-Origin', '*'
+            'Access-Control-Allow-Origin':'*'
             'status': 'success',
             'data': futureCourses
         }, 200
