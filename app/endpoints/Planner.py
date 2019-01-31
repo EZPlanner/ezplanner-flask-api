@@ -15,12 +15,11 @@ class PlannerResource(Resource):
         # coursesInput['course'] returns a list of all courses input
         futureCourses = PlannerLogic(coursesInput['course'])
         
-        response = jsonify({
+        
+        return {
             'status': 'success',
             'data': futureCourses
-        })
-        response.headers.add('Access-Control-Allow-Origin', '*') 
-        return (response,200)
+        }, 200
 
     def post(self):
         return {
