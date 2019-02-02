@@ -13,9 +13,12 @@ Disclaimer:
     There are edge cases to consider such as CLAS361 which have an empty parsed list
 
 """
-def PlannerLogic(courses):
-    import json
 
+def PlannerLogic(courses):
+    import json,re
+
+    with open('./app/JSON/courses.json') as f:
+        coursesDict = json.load(f)
 
     with open('./app/JSON/prereq.json') as f:
         prereqDict = json.load(f)
@@ -66,5 +69,14 @@ def PlannerLogic(courses):
     for course in possible_courses:
             if check_prereq(course):
                 if course not in courses:
-                    allowed_courses.append(course)
+                    courseTitle = findTitle(course)
+                    toAdd = [course, courseTitle] 
+                    allowed_courses.append(toAdd)
+
+    def findTitle(course):
+        courseSplit = (re.split(r'(^[^\d]+)', course)[1:])
+        for course in coursesDict['data']['data']:
+            if  courseSplit[0] == course['subject'] and courseSplit[1] == course['catalog_number']:
+                return course['title']
+        return 'null'
     return allowed_courses
