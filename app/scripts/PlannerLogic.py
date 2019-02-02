@@ -64,7 +64,12 @@ def PlannerLogic(courses):
             return False
         else:
             return True
-
+    def findTitle(course):
+        courseSplit = (re.split(r'(^[^\d]+)', course)[1:])
+        for course in coursesDict['data']['data']:
+            if  courseSplit[0] == course['subject'] and courseSplit[1] == course['catalog_number']:
+                return course['title']
+        return 'null'
     # check prereq's of each possible course
     for course in possible_courses:
             if check_prereq(course):
@@ -73,10 +78,5 @@ def PlannerLogic(courses):
                     toAdd = [course, courseTitle] 
                     allowed_courses.append(toAdd)
 
-    def findTitle(course):
-        courseSplit = (re.split(r'(^[^\d]+)', course)[1:])
-        for course in coursesDict['data']['data']:
-            if  courseSplit[0] == course['subject'] and courseSplit[1] == course['catalog_number']:
-                return course['title']
-        return 'null'
+    
     return allowed_courses
