@@ -6,30 +6,21 @@ from firebase_admin import credentials
 from io import StringIO
 import os, pyrebase
 
-config = {
-        'apiKey': os.environ['FIREBASE_API_KEY'],
-        'authDomain': os.environ['FIREBASE_AUTH_DOMAIN'],
-        'databaseURL': os.environ['FIREBASE_URL'],
-        'storageBucket': os.environ['FIREBASE_BUCKET'],
-        'serviceAccount': './admin.json'
-    }
 
-def parser(filepath):
-    
-    firebase = pyrebase.initialize_app(config)
-    storage = firebase.storage()
-    storage.child(filepath).download("transcript.pdf")
-    # TODO: surround with try catch and raise an exception
-    os.system("qpdf --decrypt --password='' transcript.pdf transcript_decrypted.pdf")
 
+def PdfParser(fileName):
+    # TODO: Make filepaths less hardcoded
+    try:
+        os.system("qpdf --decrypt --password='' ./app/scripts/{} ./app/scripts/transcript_decrypted.pdf".format(fileName))
+    except:
+        raise Exception('Failed to decrypt')
+    # TODO: Replace code below with simpler PyPDF3 code
     rsrcmgr = PDFResourceManager()
     retstr = StringIO()
     codec = 'utf-8'
     laparams = LAParams()
     device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
-
-    
-    fp = open('transcript_decrypted.pdf', 'rb')
+    fp = open('./app/scripts/transcript_decrypted.pdf', 'rb')
     interpreter = PDFPageInterpreter(rsrcmgr, device)
     password = ""
     maxpages = 0
@@ -47,7 +38,6 @@ def parser(filepath):
 
 
     # Code above copy pasted
-    courses=[]
     flag=False
     course=[]
     coursenum=[]
@@ -69,15 +59,12 @@ def parser(filepath):
                     coursenum.append(line)
                 except ValueError:
                     course.append(line)
-    
-                
-    os.remove("transcript.pdf")        
-    os.remove("transcript_decrypted.pdf")        
+     
+    os.remove("./app/scripts/{}".format(fileName))        
+    os.remove("./app/scripts/transcript_decrypted.pdf")        
 
     course = list(filter(None, course))
     coursenum = list(filter(None, coursenum))
     # should have a 1-1 pairing
     return [course, coursenum] 
 
-if __name__ == "__main__":
-    print(parser('test/t.pdf'))
