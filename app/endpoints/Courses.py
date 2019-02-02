@@ -24,4 +24,4 @@ class CoursesResource(Resource):
     def post(self):
         return {
             'message': 'Post mesages not accepted!'
-        }
+        }, 400

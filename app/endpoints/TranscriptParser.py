@@ -16,7 +16,7 @@ class TranscriptParserResource(Resource):
         return {
             'status': 'error',
             'data': 'Get requests not accepted'
-            }, 200
+            }, 400
 
     def post(self):
         file = request.files['file']
@@ -38,4 +38,4 @@ class TranscriptParserResource(Resource):
             return {
                 'status': 'error',
                 'data': 'failed to parse'
-                }, 200
+                }, 500
