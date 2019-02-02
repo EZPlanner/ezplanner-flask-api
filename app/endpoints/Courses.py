@@ -10,7 +10,7 @@ class CoursesResource(Resource):
     def get(self):
         courses = {}
         try:
-            raise ValueError('Using to skip try block.')
+            raise ValueError('Manual skip.')
             courses = Course.query.all()
             courses = course_schema.dump(courses).data
         except:
