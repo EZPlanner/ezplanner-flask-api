@@ -11,12 +11,11 @@ sys.path.insert(0, './endpoints')
 
 
 class TranscriptParserResource(Resource):
-    # CHANGE, no longer a get request
+    
     def get(self):
-        
         return {
             'status': 'error',
-            'data': 'no get requests'
+            'data': 'Get requests not accepted'
             }, 200
 
     def post(self):
@@ -26,9 +25,13 @@ class TranscriptParserResource(Resource):
         file.save(os.path.join('./app/scripts', filename))
         try:
             parsedTranscript = PdfParser(filename)
+            # prob some python magic to make the code below look nicer
+            data =[]
+            for x in range(0,len(parsedTranscript[0])):
+                data.append( (parsedTranscript[0][x] + parsedTranscript[1][x]).replace(" ", "") )
             return {
                 'status': 'success',
-                'data': parsedTranscript
+                'data': data
                     }, 200
         except:
             
