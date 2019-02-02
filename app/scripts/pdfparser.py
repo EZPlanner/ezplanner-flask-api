@@ -2,30 +2,25 @@ from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
+from firebase_admin import credentials
 from io import StringIO
+import os, pyrebase
 
-import os
-from itertools import groupby
-import pyrebase
-import os
-
-# TODO: get config from env variable
-
-def parser(filepath):
-    import firebase_admin
-    from firebase_admin import credentials
-    config = {
+config = {
         'apiKey': os.environ['FIREBASE_API_KEY'],
         'authDomain': os.environ['FIREBASE_AUTH_DOMAIN'],
         'databaseURL': os.environ['FIREBASE_URL'],
         'storageBucket': os.environ['FIREBASE_BUCKET'],
-        'serviceAccount': '/mnt/c/users/Zahin/git_projects/ezplanner-flask-api/app/scripts/admin.json'
+        'serviceAccount': './admin.json'
     }
+
+def parser(filepath):
+    
     firebase = pyrebase.initialize_app(config)
     storage = firebase.storage()
-    
     storage.child(filepath).download("transcript.pdf")
-    
+    # TODO: surround with try catch and raise an exception
+    os.system("qpdf --decrypt --password='' transcript.pdf transcript_decrypted.pdf")
 
     rsrcmgr = PDFResourceManager()
     retstr = StringIO()
@@ -33,7 +28,7 @@ def parser(filepath):
     laparams = LAParams()
     device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
 
-    os.system("qpdf --decrypt --password='' transcript.pdf transcript_decrypted.pdf")
+    
     fp = open('transcript_decrypted.pdf', 'rb')
     interpreter = PDFPageInterpreter(rsrcmgr, device)
     password = ""
@@ -76,9 +71,13 @@ def parser(filepath):
                     course.append(line)
     
                 
-            
+    os.remove("transcript.pdf")        
+    os.remove("transcript_decrypted.pdf")        
 
     course = list(filter(None, course))
     coursenum = list(filter(None, coursenum))
     # should have a 1-1 pairing
     return [course, coursenum] 
+
+if __name__ == "__main__":
+    print(parser('test/t.pdf'))
