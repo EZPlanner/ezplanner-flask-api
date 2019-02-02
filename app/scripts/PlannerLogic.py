@@ -66,7 +66,7 @@ def PlannerLogic(courses):
             return True
     def findTitle(course):
         courseSplit = (re.split(r'(^[^\d]+)', course)[1:])
-        for course in coursesDict[data]:
+        for course in coursesDict['data']:
             if  courseSplit[0] == course['subject'] and courseSplit[1] == course['catalog_number']:
                 return course['title']
         return 'null'
