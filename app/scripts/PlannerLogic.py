@@ -64,6 +64,7 @@ def PlannerLogic(courses):
             return False
         else:
             return True
+    # TODO optimize code below
     def findTitle(course):
         courseSplit = (re.split(r'(^[^\d]+)', course)[1:])
         for course in coursesDict['data']:
