@@ -15,6 +15,8 @@ Disclaimer:
 """
 
 def PlannerLogic(courses):
+    if courses is None:
+        return []
     import json,re
 
     with open('./app/JSON/courses.json') as f:
