@@ -16,10 +16,7 @@ class PlannerResource(Resource):
         futureCourses = PlannerLogic(coursesInput['course'])
         
         
-        return {
-            'status': 'success',
-            'data': futureCourses
-        }, 200
+        return futureCourses, 200
 
     def post(self):
         return {
