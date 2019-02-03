@@ -11,7 +11,7 @@ class CoursesResource(Resource):
         courses = {}
         # try:
         courses = Course.query.all()
-        courses = course_schema.dump(courses).data
+        courses = courses_schema.dump(courses).data
             # raise ValueError('Using to skip try block.')
         # except:
         #     with open('./app/JSON/courses.json') as f:
