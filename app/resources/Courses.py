@@ -9,13 +9,13 @@ course_schema = CourseSchema()
 class CoursesResource(Resource):
     def get(self):
         courses = {}
-        try:
-            raise ValueError('Using to skip try block.')
-            courses = Course.query.all()
-            courses = course_schema.dump(courses).data
-        except:
-            with open('./app/JSON/courses.json') as f:
-                courses = json.load(f)
+        # try:
+        courses = Course.query.all()
+        courses = course_schema.dump(courses).data
+            # raise ValueError('Using to skip try block.')
+        # except:
+        #     with open('./app/JSON/courses.json') as f:
+        #         courses = json.load(f)
         return {
             'status': 'success',
             'data': courses
