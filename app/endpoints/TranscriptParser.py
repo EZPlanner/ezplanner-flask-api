@@ -29,10 +29,7 @@ class TranscriptParserResource(Resource):
             data =[]
             for x in range(0,len(parsedTranscript[0])):
                 data.append( (parsedTranscript[0][x] + parsedTranscript[1][x]).replace(" ", "") )
-            return {
-                'status': 'success',
-                'data': data
-                    }, 200
+            return data,200
         except:
             
             return {
