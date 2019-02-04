@@ -4,7 +4,7 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 from firebase_admin import credentials
 from io import StringIO
-import os, pyrebase
+import os
 
 
 
