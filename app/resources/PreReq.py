@@ -11,7 +11,7 @@ class PreReqResource(Resource):
         courses = {}
         try:
             # TODO Replace code below, this was just copied from Courses.py
-            raise ValueError('Using to skip try block.')
+            raise ValueError('Manual skip.')
             courses = Course.query.all()
             courses = course_schema.dump(courses).data
         except:
@@ -25,4 +25,4 @@ class PreReqResource(Resource):
     def post(self):
         return {
             'message': 'Post mesages not accepted!'
-        }
+        }, 400
