@@ -7,7 +7,7 @@ from flask_restful import Resource,reqparse
 import json,sys,os
 sys.path.insert(0, '../')
 from app.scripts.pdfparser import PdfParser
-sys.path.insert(0, './endpoints')
+sys.path.insert(0, './resources')
 
 
 class TranscriptParserResource(Resource):
