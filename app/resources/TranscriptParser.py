@@ -22,6 +22,11 @@ class TranscriptParserResource(Resource):
         file = request.files['file']
         userUUID = request.args.get('uuid')
         filename = '{}transcript.pdf'.format(userUUID)
+        if not filename.endswith(".pdf"):
+            return {
+            'status': 'error',
+            'data': 'Only PDF files expected'
+            }, 400
         file.save(os.path.join('./app/scripts', filename))
         try:
             parsedTranscript = PdfParser(filename)
