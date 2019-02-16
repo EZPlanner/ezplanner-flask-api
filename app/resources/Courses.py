@@ -12,7 +12,6 @@ class CoursesResource(Resource):
         # try:
         courses = Course.query.all()
         courses = courses_schema.dump(courses).data
-            # raise ValueError('Using to skip try block.')
         # except:
         #     with open('./app/JSON/courses.json') as f:
         #         courses = json.load(f)
@@ -24,4 +23,4 @@ class CoursesResource(Resource):
     def post(self):
         return {
             'message': 'Post mesages not accepted!'
-        }
+        }, 400
