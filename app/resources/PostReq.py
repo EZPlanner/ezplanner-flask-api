@@ -6,15 +6,16 @@ import json
 courses_schema = CourseSchema(many=True)
 course_schema = CourseSchema()
 
-class CoursesResource(Resource):
+class PostReqResource(Resource):
     def get(self):
         courses = {}
         try:
+            # TODO Replace code below, this was just copied from Courses.py
             raise ValueError('Manual skip.')
             courses = Course.query.all()
             courses = course_schema.dump(courses).data
         except:
-            with open('./app/JSON/courses.json') as f:
+            with open('./app/JSON/postreq.json') as f:
                 courses = json.load(f)
         return {
             'status': 'success',
