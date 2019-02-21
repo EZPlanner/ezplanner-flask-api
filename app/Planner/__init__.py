@@ -4,6 +4,7 @@ class Planner:
     def __init__(self, courses_taken, title_map):
         self.courses_taken = courses_taken
         self.db = DynamoDB()
+        self.title_map = title_map
         self.prereq_dict = {}
         self.postreq_dict = {}
         self._load_prereq_dict()
@@ -37,7 +38,7 @@ class Planner:
         required = 0
 
         for item in items:
-            if isinstance(item, list) and recursive_check(item) == False:
+            if isinstance(item, list) and self.check_prereqs(item) == False:
                 return False
             
             if isinstance(item, int):
@@ -61,12 +62,13 @@ class Planner:
         allowed_courses = []
 
         for course in self.courses_taken:
-            possible_courses.extend(self.postreq_dict[course])
+            if course in self.postreq_dict:
+                possible_courses.extend(self.postreq_dict[course])
 
         possible_courses = list(set(possible_courses)) # Get rid of duplicates
 
         for course in possible_courses:
             if course not in self.courses_set and self.check_prereqs(self.prereq_dict[course]):
-                allowed_courses.append([course, title_map[course]])
+                allowed_courses.append([course, self.title_map[course]])
 
         return allowed_courses

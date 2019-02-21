@@ -16,7 +16,7 @@ class TranscriptParserResource(Resource):
         return {
             'status': 'error',
             'data': 'Get requests not accepted'
-            }, 400
+        }, 400
 
     def post(self):
         file = request.files['file']
@@ -24,8 +24,8 @@ class TranscriptParserResource(Resource):
         filename = '{}transcript.pdf'.format(userUUID)
         if not filename.endswith(".pdf"):
             return {
-            'status': 'error',
-            'data': 'Only PDF files expected'
+                'status': 'error',
+                'data': 'Only PDF files expected'
             }, 400
         file.save(os.path.join('./app/scripts', filename))
         try:
