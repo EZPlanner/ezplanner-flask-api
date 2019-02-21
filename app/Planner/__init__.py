@@ -1,6 +1,5 @@
 from app.aws.dynamodb import DynamoDB
 from decimal import Decimal
-from pprint import pprint
 
 class Planner:
     def __init__(self, courses_taken, title_map):
@@ -22,8 +21,6 @@ class Planner:
         for postreq in postreqs:
             postreq_dict[postreq['course_key']] = postreq['postreqs']
 
-        # pprint(postreq_dict)
-
         self.postreq_dict = postreq_dict
 
     def _load_prereq_dict(self):
@@ -35,18 +32,11 @@ class Planner:
         for prereq in prereqs:
             prereq_dict[''.join(prereq['course_key'].split('/'))] = prereq['prereqs']
 
-        # pprint(prereq_dict)
-
         self.prereq_dict = prereq_dict
 
     def check_prereqs(self, items):
         taken = 0
         required = 0
-
-        if len(items) >= 2:
-            if items[1] == 'SYDE223':
-                pprint(items)
-                print(type(items[0]))
 
         for item in items:
             if isinstance(item, list):
