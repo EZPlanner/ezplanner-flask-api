@@ -2,11 +2,7 @@ from flask import request, jsonify
 from flask_restful import Resource,reqparse
 from app.scripts.PlannerLogic import PlannerLogic
 from app.Planner import Planner
-from app.Model import db, Course, CourseSchema
 import json
-
-courses_schema = CourseSchema(many=True)
-course_schema = CourseSchema()
 
 class PlannerResource(Resource):
     def get(self):
@@ -14,15 +10,10 @@ class PlannerResource(Resource):
         parser.add_argument('course', action='append')
         coursesInput = parser.parse_args()
 
-        courses = {}
-
-        courses = Course.query.all()
-        courses = courses_schema.dump(courses).data
-
         title_map = {}
 
-        for course in courses:
-            title_map[course['course_name']] = course['course_title']
+        with open('./courses_title.json') as f:
+            title_map = json.load(f)
 
         planner = Planner(coursesInput['course'], title_map)
 
