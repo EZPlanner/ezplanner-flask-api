@@ -9,19 +9,11 @@ course_schema = CourseSchema()
 class CoursesResource(Resource):
     def get(self):
         courses = {}
-        try:
-            raise ValueError('Manual skip.')
-            courses = Course.query.all()
-            courses = course_schema.dump(courses).data
-        except:
-            with open('./app/JSON/courses.json') as f:
-                courses = json.load(f)
+
+        courses = Course.query.all()
+        courses = courses_schema.dump(courses).data
+
         return {
             'status': 'success',
             'data': courses
         }, 200
-
-    def post(self):
-        return {
-            'message': 'Post mesages not accepted!'
-        }, 400
